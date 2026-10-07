@@ -1,0 +1,66 @@
+#include "raylib.h"
+
+int main(void)
+{
+    const int screenWidth = 800;
+    const int screenHeight = 500;
+
+    InitWindow(screenWidth, screenHeight, "Escalacion");
+
+    SetTargetFPS(120);
+
+    float rectPosX = 350.0f;
+    float rectPosY = 0.0f;
+
+    float rectWidth = 100.0f;
+    float rectHeight = 100.0f;
+
+    float rectSpeedY = 80.0f;
+
+    float escala = .5f;
+
+    while (!WindowShouldClose())
+    {
+        float deltaTime = GetFrameTime();
+
+        rectPosY += rectSpeedY * deltaTime;
+
+        if (rectPosY >= screenHeight - rectHeight)
+        {
+            rectPosY = screenHeight - rectHeight;
+
+            rectSpeedY *= -1;
+
+            rectWidth *= escala;
+            rectHeight *= escala;
+        }
+
+        else if (rectPosY <= 0)
+        {
+            rectPosY = 0;
+
+            rectSpeedY *= -1;
+
+            rectWidth /= escala;
+            rectHeight /= escala;
+        }
+
+        BeginDrawing();
+
+        ClearBackground(WHITE);
+
+        DrawRectangle(
+            rectPosX,
+            rectPosY,
+            rectWidth,
+            rectHeight,
+            YELLOW
+        );
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
+}
