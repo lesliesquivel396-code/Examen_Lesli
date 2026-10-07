@@ -1,0 +1,73 @@
+#include "raylib.h"
+
+int main(void)
+{
+    const int screenWidth = 800;
+    const int screenHeight = 500;
+
+    InitWindow(screenWidth, screenHeight, "Ejemplo 1");
+
+    SetTargetFPS(120);
+
+    float rectPosX = 350.0f;
+    float rectPosY = 0.0f;
+
+    float rectWidth = 100.0f;
+    float rectHeight = 100.0f;
+
+    float rectSpeedX = 0.0f;
+    float rectSpeedY = 80.0f;
+
+    struct Color colors[4] = {
+        BLACK,
+        VIOLET,
+        PURPLE,
+        YELLOW
+    };
+
+    int currentColor = 0;
+
+    while (!WindowShouldClose())
+    {
+        float deltaTime = GetFrameTime();
+
+        rectPosY += rectSpeedY * deltaTime;
+
+        if (rectPosY >= screenHeight - rectHeight)
+        {
+            rectPosY = screenHeight - rectHeight;
+            rectSpeedY *= -1;
+            currentColor++;
+        }
+
+        else if (rectPosY <= 0)
+        {
+            rectPosY = 0;
+            rectSpeedY *= -1;
+            currentColor++;
+        }
+
+        if (currentColor > 3)
+        {
+            currentColor = 0;
+        }
+
+        BeginDrawing();
+
+        ClearBackground(WHITE);
+
+        DrawRectangle(
+            rectPosX,
+            rectPosY,
+            rectWidth,
+            rectHeight,
+            colors[currentColor]
+        );
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
+}
