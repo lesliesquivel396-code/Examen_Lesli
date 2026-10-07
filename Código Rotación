@@ -1,0 +1,56 @@
+#include "raylib.h"
+
+int main(void)
+{
+    const int screenWidth = 800;
+    const int screenHeight = 500;
+
+    InitWindow(screenWidth, screenHeight, "Rotación");
+
+    SetTargetFPS(60);
+
+    Vector2 posicion = { 400.0f, 250.0f };
+
+    float tamaño = 120.0f;
+
+    float angulo = 0.0f;
+
+    float velocidadRotacion = 100.0f;
+
+    while (!WindowShouldClose())
+    {
+        float deltaTime = GetFrameTime();
+
+        angulo += velocidadRotacion * deltaTime;
+
+        if (angulo >= 360.0f)
+        {
+            angulo -= 360.0f;
+        }
+
+        BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        DrawRectanglePro(
+            (Rectangle){
+                posicion.x,
+                posicion.y,
+                tamaño,
+                tamaño
+            },
+            (Vector2){
+                tamaño / 2,
+                tamaño / 2
+            },
+            angulo,
+            PINK 
+        );
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
+}
